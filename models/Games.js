@@ -5,7 +5,7 @@ var GameSchema = new mongoose.Schema({
   started: Boolean,
   last_move: Date,
   creation_time: Date,
-  password: String.
+  password: String,
   number_turns: Number,
   room_name : String,
   word_pile : [String],
