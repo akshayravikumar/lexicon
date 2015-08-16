@@ -5,7 +5,7 @@ var routes = require('./server/routes/routes');
 var fs = require('fs');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var session = require('express-session');
 var dbConfig = require('./server/config/database.js');
 
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // connect to database
-mongoose.createConnection(dbConfig.uri);
+// mongoose.createConnection(dbConfig.uri);
 
 // configure Passport
 // require('./server/config/passport')(passport); // pass passport for configuration

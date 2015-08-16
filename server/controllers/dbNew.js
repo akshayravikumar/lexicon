@@ -1,7 +1,7 @@
 var ObjectId = require('mongoose').Types.ObjectId; 
 
 var Game = require('../models/Games');
-var Player = require('../models/Games');
+var Player = require('../models/Player');
 
 function dbNew(req, res) {
 

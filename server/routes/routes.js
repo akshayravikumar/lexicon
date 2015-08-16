@@ -3,19 +3,17 @@ var router = express.Router();
 var path = require('path');
 
 // DATABASE
-var mongoose = require('mongoose');
-var dbConfig = require('../config/database');
-mongoose.connect(dbConfig.uri);
+// var mongoose = require('mongoose');
+// var dbConfig = require('../config/database');
+// mongoose.connect(dbConfig.uri);
 
 // CONTROLLERS
 // general
 var returnIndex = require('../controllers/returnIndex');
 
-var dbGame = require('../controllers/dbGame');
-var dbNew = require('../controllers/dbNew');
-var dbJoin = require('../controllers/dbJoin');
-
-
+// var dbGame = require('../controllers/dbGame');
+// var dbNew = require('../controllers/dbNew');
+// var dbJoin = require('../controllers/dbJoin');
 
 
 /***** PAGES HANDLED CLIENT SIDE *****/
@@ -25,10 +23,10 @@ router.get('/', returnIndex);
 router.get('/game/*', returnIndex);
 // login page
 
-router.get('/db/game', dbGame);
+// router.get('/db/game', dbGame);
 
-router.post('/db/new', dbNew);
-router.post('/db/join', dbJoin);
+// router.post('/db/new', dbNew);
+// router.post('/db/join', dbJoin);
 
 /***** ERROR HANDLING *****/
 // 404

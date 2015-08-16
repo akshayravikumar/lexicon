@@ -9,6 +9,9 @@
 
          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+
+         <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -17,22 +20,25 @@
 
         <!-- <link rel="shortcut icon" href="/assets/img/icons/favicon.ico"> -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-
        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-route.min.js"></script>
 
+        <!-- Firebase -->
+        <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+        <!-- AngularFire -->
+        <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
         
         <script src="/app.js"></script>
         
         <!-- controllers -->
         <script src="/controllers/splashController.js"></script>
+        <script src="/controllers/roomController.js"></script>
         <script src="/controllers/pageController.js"></script>
-         <script src="/controllers/roomController.js"></script>
         
-        <!-- services -->
-        <script src="/services/DataService.js"></script>
-       
+       <!-- services -->
+        <!-- // <script src="/services/DataService.js"></script> -->
+ 
 
        <!-- css  -->
         <link rel="stylesheet" href="/assets/css/custom.css">
@@ -43,10 +49,10 @@
 
          <base href="/">
     </head>
-    <body ng-controller="pageController">
+    <body>
       <nav-bar></nav-bar>
       <div id="page-content" class="fill">
-        <div ng-view  ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}"></div>
+        <div ng-view></div>
       </div>
     </body>
 </html>

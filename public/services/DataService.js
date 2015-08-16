@@ -1,4 +1,5 @@
-angular.module('lexiconApp').factory('DataService', function($http, $q){
+angular.module('lexiconApp', [
+]).factory('DataService', function($http, $q){
 	return {
         getData: function(path) {
             return $http.get(path)
