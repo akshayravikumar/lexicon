@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="lexiconApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>lexicon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <!-- <link rel="shortcut icon" href="/assets/img/icons/favicon.ico"> -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+
+       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-route.min.js"></script>
+
+        
+        <script src="/app.js"></script>
+        
+        <!-- controllers -->
+        <script src="/controllers/splashController.js"></script>
+        <script src="/controllers/pageController.js"></script>
+         <script src="/controllers/roomController.js"></script>
+        
+        <!-- services -->
+        <script src="/services/DataService.js"></script>
+       
+
+       <!-- css  -->
+        <link rel="stylesheet" href="/assets/css/custom.css">
+         
+
+        <!-- fonts  -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' type='text/css'>
+
+         <base href="/">
+    </head>
+    <body ng-controller="pageController">
+      <nav-bar></nav-bar>
+      <div id="page-content" class="fill">
+        <div ng-view  ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}"></div>
+      </div>
+    </body>
+</html>

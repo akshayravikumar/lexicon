@@ -1,0 +1,54 @@
+<div class="row">
+	<!-- <div id="splash-container" class="page-fill"> -->	 
+
+	<div style = "width: 50%; margin: 0 auto; margin-top: 10%">
+
+	 <!-- waiting for db query  -->
+	<div ng-show = "!insideRoom && waiting">
+	 {{waitingMessage}}
+	</div>
+
+	<!-- game exists, prompt for name  -->
+
+	 <div ng-show = "gameExists && !insideRoom && !waiting"> 
+        Welcome to game {{gameName}}! Please enter your name.
+        
+        <form ng-submit="joinExistingGame()" style="margin-top:30px;">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Name?" ng-model="personName"></input>
+            <input type="text" class="form-control" placeholder="Password?" ng-model="gamePassword"></input>
+          </div>
+          <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+
+        <h2> {{statusMessage}} </h2>
+
+      </div>
+
+      <!-- game doesn't exist, prompt to create  -->
+
+     <div ng-show = "!gameExists && !insideRoom && !waiting"> 
+      Game  {{gameName}} is empty. Would you like to start this game?
+
+      <form ng-submit="createNewGame()" style="margin-top:30px;">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Name?" ng-model="playerName"></input>
+          <input type="text" class="form-control" placeholder="Password?" ng-model="gamePassword"></input>
+          <input type="number" class="form-control" placeholder="Max Players?" ng-model="maxPlayers"></input>
+          <input type="checkbox" class="form-control" ng-model="publicGame"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+
+      <h2> {{statusMessage}} </h2>
+
+    </div>
+
+    <div ng-show = "insideRoom"> 
+      YOU ARE NOW INSIDE {{gameName}}, LET THE TURNUPS BEGIN. 
+      <div ng-show = "creator"> The password to this game is {{gamePassword}} - bring your friends! </div>
+    </div>
+
+	</div>
+</div>
+ 
