@@ -29,6 +29,18 @@ angular.module('lexiconApp', ['ngRoute', "firebase"]) // ,'n3-pie-chart'
     	//check to see if user is authenticated
 	});
 })
+.directive('scrollBottom', function($timeout) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attr) {
+      scope.$watchCollection(attr.scroll, function(newVal) {
+        $timeout(function() {
+         element[0].scrollTop = element[0].scrollHeight;
+        });
+      });
+    }
+  }
+});
 
 
 

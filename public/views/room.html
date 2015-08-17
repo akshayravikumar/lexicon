@@ -119,7 +119,7 @@
 
           <div class = "col m3" id = "chat" style = "height: 90vh;">
 
-          <div class = "row" style = "background-color: #bdc3c7l; overflow: scroll; height: 100%;">
+          <div class = "row" style = "background-color: #bdc3c7l; overflow: scroll; height: 100%;" scrollBottom>
               <div id = "messages" ng-repeat = "m in messages">
                   <div ng-if = "m.type == 'message'">
                       <strong> {{m.name}} : </strong> {{m.text}}

@@ -1,10 +1,11 @@
 angular.module('lexiconApp').controller('roomController', 
 function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
-
+	$scope.playerName = "";
 	$scope.insideRoom = false;
 	$scope.creator = false;
 	$scope.publicGame = false;
+	var playerName;
 	var id = -1;
 
 	$scope.gameExists = false;
@@ -20,12 +21,17 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 	var ref = new Firebase("https://lexicongame.firebaseio.com/" + $routeParams.name);
 
+	//var playerRef =  new Firebase("https://lexicongame.firebaseio.com/" + $routeParams.name + "/players/" + playerName);
+
+
 	$scope.gameObject = $firebaseObject(ref);
 	$scope.messages = $firebaseArray(ref.child('messages'));
 
 	$scope.gameObject.$loaded(function () {
 
 		$scope.messages.$loaded(function() {
+
+			console.log(playerName + " is the name");
 
 			$scope.sendMessage = function() {
 				if ($scope.messageBody.length > 0) {
@@ -38,18 +44,8 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 				$scope.messageBody = "";
 			}
 
-			ref.onDisconnect().update({num_players: $scope.gameObject.num_players - 1}, function() {
-				
-				var byeString = $scope.playerName + " has left!"
 
-				$scope.messages.$add({
-					type: 'info',
-				 	name: "",
-			      	text: byeString
-				});
-			}
-			);
-			
+
 		});
 
 
@@ -63,7 +59,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		$scope.createNewGame = function() {
 
 			var pass = $scope.gamePassword;
-			var playerName = $scope.playerName;
+			playerName = $scope.playerName;
 
 			if ($scope.gamePassword == undefined) {
 				pass = "";
@@ -104,7 +100,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		$scope.joinExistingGame = function() {
 			$scope.statusMessage = "";	
-			var playerName = $scope.playerName;
+			playerName = $scope.playerName;
 
 			if ($scope.gameObject.password.length == 0 || $scope.gameObject.password == $scope.gamePassword) {
 				if (!($scope.playerName in $scope.gameObject.players)) {
@@ -143,8 +139,10 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 			$scope.waitingMessage = "Sorry, this game is full. Feel free to start a new one!";
 		} else {
 			$scope.waiting = false;
+
 		}
 
+		
 
 	});
 
@@ -153,7 +151,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		$scope.insideRoom = true;
 		console.log($scope.insideRoom);
 
-		var welcomeString = $scope.playerName + " has entered!"
+		var welcomeString = playerName + " has entered!"
 
 		$scope.messages.$add({
 			type: 'info',
@@ -161,7 +159,23 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 	      	text: welcomeString
 		});
 
+		ref.child("players").child(playerName).onDisconnect().remove(function() {
+
+			ref.update({num_players : $scope.gameObject.num_players - 1});
+			
+			var byeString = playerName + " has left!";
+			
+				$scope.messages.$add({
+					type: 'info',
+				 	name: "",
+			      	text: byeString
+				});
+			}
+		);
+
 	}
+
+
 
 	
 
