@@ -13,13 +13,13 @@
          <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <!-- // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
 
         <!-- <link rel="shortcut icon" href="/assets/img/icons/favicon.ico"> -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-route.min.js"></script>
@@ -41,8 +41,12 @@
  
 
        <!-- css  -->
-        <link rel="stylesheet" href="/assets/css/custom.css">
+
+      
          
+        <link href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" rel = "stylesheet">
+
+         <link rel="stylesheet" href="/assets/css/custom.css">
 
         <!-- fonts  -->
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' type='text/css'>
@@ -50,9 +54,31 @@
          <base href="/">
     </head>
     <body>
-      <nav-bar></nav-bar>
-      <div id="page-content" class="container">
-        <div ng-view></div>
+
+     <nav>
+      <div class="nav-wrapper">
+        <div class = "container">
+        <a href="/" class="brand-logo">Lexicon</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+          <li><a href="about">About</a></li>
+        </ul>
+        </div>
       </div>
+    </nav>
+         
+
+      <div class="container">
+         <div ng-view ></div>
+      </div>
+ 
+     <footer class="page-footer teal lighten-2">
+          <div class="container valign-wrapper">
+            <p class = "valign center-align">
+              © 2015 Akshay Ravikumar
+            </p> 
+          </div>
+     </footer>
+      
     </body>
 </html>

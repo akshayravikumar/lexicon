@@ -47,14 +47,14 @@
     <div ng-show = "insideRoom">
 
     <div id = "roomHeader" class = "row" style="background-color:#3498db; height: 150px">
-      <h1 class = "text-center"> Game {{gameName}} </h1>
+      <h2 class = "text-center"> Game {{gameName}} </h1>
       <br/>
-      <h2 class = "text-center"> Pass: {{gamePassword}} </h2>
+      <h class = "text-center"> Pass: {{gamePassword}} </h2>
     </div>
 
     <div class = "row">
 
-    <div class = "col-md-9 no-float" >
+    <div class = "col m9" >
 
       <div id = "wordPile" style="background-color: #27ae60; width: 100%; height: 200px" class = "row">
           WORDPILE IS HERE
@@ -77,13 +77,20 @@
       </div>
     </div>
 
-    <div class = "col-md-3 no-float" id = "chat" >
-      <div id = "messages" style="background-color: #bdc3c7" ng-repeat = "m in messages">
-          <b> {{m.name}} : </b> {{m.text}}
+    <div class = "col m3" id = "chat" >
+      <div id = "messages" style="background-color: #bdc3c7l; overflow-y: scroll;" ng-repeat = "m in messages">
+      <div ng-if = "m.type == 'message'">
+          <strong> {{m.name}} : </strong> {{m.text}}
+      </div>
+
+      <div ng-if = "m.type == 'info'">
+          <em> <b> {{m.text}} </b> </em>
+      </div>
+
       </div>
 
       <div id = "chatFooter" style="position: absolute; bottom: 0;" valign = "bottom">
-        <form class="form-inline" style="width: 100%" ng-submit="sendMessage()">
+        <form class="form-inline"ng-submit="sendMessage()">
           <div class="form-group">
             <input type="text" class="form-control" ng-model = "messageBody" placeholder="Jane Doe">
           </div>

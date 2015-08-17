@@ -11,6 +11,9 @@ angular.module('lexiconApp', ['ngRoute', "firebase"]) // ,'n3-pie-chart'
 	    	templateUrl: '/views/room.html',
 	    	controller: 'roomController'
 	    })
+	    .when('/about', {
+	    	templateUrl: '/views/about.html',
+	    })
 	    .otherwise({
 	        redirectTo: '/'
 	    });

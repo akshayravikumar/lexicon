@@ -1,23 +1,32 @@
 
 	<!-- <div id="splash-container" class="page-fill"> -->
-<div id="splash" style = "width: 50%;  margin: 0 auto;">
-	<div id="splash-content" class="row">
-		<h3 class="text-center" id = "gameTitle">lexicon</h3>
-	</div>
 
-	<center>
-        <form ng-submit="joinRoom()">
-          <div class="form-group" style="width: 50%;">
-            <input type="text" class="form-control input-lg" placeholder="Visit a room..." ng-model="roomName" style="border: 2px solid #22A7F0; "></input>
-          </div>
-          <br>
-          <button class = "btn btn-primary btn-block btn-large" type="submit">Join/Start This Game</button>
-          <h2 data-ng-animate="'fade'"> {{errorMessage}}  </h2>
-        </form>
-    </center>
+<div class="row">
+
+  <h1 id = "gameTitle" class = "center-align blue-text text-darken-2" style = "font-size: 200px">
+    lexicon
+  </h1>
 
 </div>
 
-</div>
+  <div class="row">
+
+  <center>
+  
+   <form ng-submit="joinRoom()">
+      <div class="input-field" style="width: 50%;">
+        <input type="text" placeholder="wooo" ng-model="roomName"></input>
+      </div>
+      <br>
+      <button class = "btn btn-primary btn-block btn-large" type="submit">Visit This Room</button>
+      <h3 data-ng-animate="'fade'"> {{errorMessage}}  </h3>
+    </form>
+
+  </center>
+
+  </div>
+
+
+
 
  

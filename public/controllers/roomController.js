@@ -121,13 +121,23 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		console.log("Entering room!");
 		$scope.insideRoom = true;
 		console.log($scope.insideRoom);
+
+		var welcomeString = $scope.playerName + " has entered!"
+
+		$scope.messages.$add({
+			type: 'info',
+		 	name: "",
+	      	text: welcomeString
+		});
+
 	}
 
 	$scope.messages.$loaded(function() {
+
 		$scope.sendMessage = function() {
 			if ($scope.messageBody.length > 0) {
 				$scope.messages.$add({
-					type: "message",
+					type: 'message',
 				 	name: $scope.playerName,
 			      	text: $scope.messageBody
 			    });
