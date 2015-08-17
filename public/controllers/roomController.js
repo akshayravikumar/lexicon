@@ -6,14 +6,13 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 	$scope.creator = false;
 	$scope.publicGame = false;
 	var playerName;
-	var id = -1;
 
 	$scope.gameExists = false;
 
-	$scope.waitingMessage = "Looking for the game...";
+	$scope.waitingMessage = "Finding game data...";
 	$scope.waiting = true;
 
-
+	$scope.letters = [];
 	$scope.gameName = $routeParams.name;
 
 	// var game = games.postData("/find", {roomname: $scope.gameName});
@@ -23,31 +22,12 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 	//var playerRef =  new Firebase("https://lexicongame.firebaseio.com/" + $routeParams.name + "/players/" + playerName);
 
-
 	$scope.gameObject = $firebaseObject(ref);
 	$scope.messages = $firebaseArray(ref.child('messages'));
 
 	$scope.gameObject.$loaded(function () {
 
-		$scope.messages.$loaded(function() {
-
-			console.log(playerName + " is the name");
-
-			$scope.sendMessage = function() {
-				if ($scope.messageBody.length > 0) {
-					$scope.messages.$add({
-						type: 'message',
-					 	name: $scope.playerName,
-				      	text: $scope.messageBody
-				    });
-				}
-				$scope.messageBody = "";
-			}
-
-
-
-		});
-
+	$scope.messages.$loaded(function() {
 
 		console.log($scope.gameObject);
 
@@ -142,42 +122,53 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		}
 
-		
+		console.log(playerName + " is the name");
+
+		$scope.sendMessage = function() {
+			if ($scope.messageBody.length > 0) {
+				$scope.messages.$add({
+					type: 'message',
+				 	name: $scope.playerName,
+			      	text: $scope.messageBody
+			    });
+			}
+			$scope.messageBody = "";
+		}
+
+		enterRoom = function() {
+			console.log("Entering room!");
+			$scope.insideRoom = true;
+			console.log($scope.insideRoom);
+
+			var welcomeString = playerName + " has entered!"
+
+			$scope.messages.$add({
+				type: 'info',
+			 	name: "",
+		      	text: welcomeString
+			});
+
+			ref.child("players").child(playerName).onDisconnect().remove(function() {
+
+				ref.update({num_players : $scope.gameObject.num_players - 1});
+				
+				var byeString = playerName + " has left!";
+
+					$scope.messages.$add({
+						type: 'info',
+					 	name: "",
+				      	text: byeString
+					});
+				}
+			);
+
+
+		}
+
+	});	
 
 	});
 
-	enterRoom = function() {
-		console.log("Entering room!");
-		$scope.insideRoom = true;
-		console.log($scope.insideRoom);
-
-		var welcomeString = playerName + " has entered!"
-
-		$scope.messages.$add({
-			type: 'info',
-		 	name: "",
-	      	text: welcomeString
-		});
-
-		ref.child("players").child(playerName).onDisconnect().remove(function() {
-
-			ref.update({num_players : $scope.gameObject.num_players - 1});
-			
-			var byeString = playerName + " has left!";
-			
-				$scope.messages.$add({
-					type: 'info',
-				 	name: "",
-			      	text: byeString
-				});
-			}
-		);
-
-	}
-
-
-
 	
-
 
 });

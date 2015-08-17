@@ -35,3 +35,11 @@ body {
 main {
   flex: 1 0 auto !important;
 }
+
+.wordtile {
+  width: 35px;
+  height: 35px;
+  background-color: #29e;
+  color: white;
+  font-size: 18px;
+}

@@ -29,7 +29,7 @@ angular.module('lexiconApp', ['ngRoute', "firebase"]) // ,'n3-pie-chart'
     	//check to see if user is authenticated
 	});
 })
-.directive('scrollBottom', function($timeout) {
+.directive('scroll', function($timeout) {
   return {
     restrict: 'A',
     link: function(scope, element, attr) {
