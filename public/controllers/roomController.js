@@ -1,5 +1,5 @@
 angular.module('lexiconApp').controller('roomController', 
-function($scope, $routeParams, $location, $firebaseObject){
+function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 
 	$scope.insideRoom = false;
@@ -21,12 +21,14 @@ function($scope, $routeParams, $location, $firebaseObject){
 	var ref = new Firebase("https://lexicongame.firebaseio.com/" + $routeParams.name);
 
 	$scope.gameObject = $firebaseObject(ref);
-
+	$scope.messages = $firebaseArray(ref.child('messages'));
 
 	$scope.gameObject.$loaded(function () {
 		console.log($scope.gameObject);
 
-		if ("players" in $scope.gameObject) {$scope.gameExists = true;} 
+		if ("players" in $scope.gameObject) {
+			$scope.gameExists = true;
+		} 
 		else {$scope.gameExists = false;}
 
 		$scope.createNewGame = function() {
@@ -72,38 +74,47 @@ function($scope, $routeParams, $location, $firebaseObject){
 		}
 
 		$scope.joinExistingGame = function() {
+			$scope.statusMessage = "";	
 			var playerName = $scope.playerName;
 
 			if ($scope.gameObject.password.length == 0 || $scope.gameObject.password == $scope.gamePassword) {
-				
-				var updatedData = {
-					num_players: $scope.gameObject.num_players + 1, 
-					last_move: Firebase.ServerValue.TIMESTAMP,
-				};
+				if (!($scope.playerName in $scope.gameObject.players)) {
+					var updatedData = {
+						num_players: $scope.gameObject.num_players + 1, 
+						last_move: Firebase.ServerValue.TIMESTAMP,
+					};
 
-				var newPlayer = new Object();
+					var newPlayer = new Object();
 
-				newPlayer[playerName] = {
-							creator: false,
-							points: 0,
-							words: []
-						};
+					newPlayer[playerName] = {
+								creator: false,
+								points: 0,
+								words: []
+							};
 
-				ref.update(updatedData, function() {
-					console.log("updated game");
-					ref.child('players').set(newPlayer, function() {
-						console.log("added new player");
-						$scope.creator = false;
-						enterRoom();
-					});	
-				});
-				// games.games.push({name : gameName, players: 0 , total: 10});	
-			} else {
-				$scope.statusMessage = "This password is incorrect. Please try again!"
+					ref.update(updatedData, function() {
+						console.log("updated game");
+						ref.child('players').update(newPlayer, function() {
+							console.log("added new player");
+							$scope.creator = false;
+							enterRoom();
+						});	
+					});
+					// games.games.push({name : gameName, players: 0 , total: 10});	
+				} else {
+					$scope.statusMessage = "Sorry, that name is already taken!";	
+				}
+			}
+			else {
+				$scope.statusMessage = "This password is incorrect. Please try again!";
 			}
 		}
 
-		$scope.waiting = false;
+		if ($scope.gameObject.num_players >= $scope.gameObject.max_players) {
+			$scope.waitingMessage = "Sorry, this game is full. Feel free to start a new one!";
+		} else {
+			$scope.waiting = false;
+		}
 	});
 
 	enterRoom = function() {
@@ -111,5 +122,18 @@ function($scope, $routeParams, $location, $firebaseObject){
 		$scope.insideRoom = true;
 		console.log($scope.insideRoom);
 	}
+
+	$scope.messages.$loaded(function() {
+		$scope.sendMessage = function() {
+			if ($scope.messageBody.length > 0) {
+				$scope.messages.$add({
+					type: "message",
+				 	name: $scope.playerName,
+			      	text: $scope.messageBody
+			    });
+			}
+			$scope.messageBody = "";
+		}
+	});
 
 });

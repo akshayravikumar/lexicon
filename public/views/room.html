@@ -1,24 +1,22 @@
-<div class="row">
+
 	<!-- <div id="splash-container" class="page-fill"> -->	 
 
-	<div style = "width: 50%; margin: 0 auto; margin-top: 10%">
-
 	 <!-- waiting for db query  -->
-	<div ng-show = "!insideRoom && waiting">
+	<div ng-show = "!insideRoom && waiting" style = "width: 50%; margin: 0 auto; margin-top: 10%">
 	 {{waitingMessage}}
 	</div>
 
 	<!-- game exists, prompt for name  -->
 
-	 <div ng-show = "gameExists && !insideRoom && !waiting"> 
+	 <div ng-show = "gameExists && !insideRoom && !waiting" style = "width: 50%; margin: 0 auto; margin-top: 10%"> 
         Welcome to game {{gameName}}! Please enter your name.
         
         <form ng-submit="joinExistingGame()" style="margin-top:30px;">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Name?" ng-model="playerName"></input>
-            <input type="text" class="form-control" placeholder="Password?" ng-model="gamePassword"></input>
+            <input type="text" class="form-control" placeholder="Name?" ng-model="playerName" maxlength="10" required></input>
+            <input type="text" class="form-control" placeholder="Password?" maxlength="10" ng-model="gamePassword"></input>
           </div>
-          <button type="submit" class="btn btn-primary">Post</button>
+          <button type="submit" class="btn btn-primary">Join Game</button>
         </form>
 
         <h2> {{statusMessage}} </h2>
@@ -27,28 +25,78 @@
 
       <!-- game doesn't exist, prompt to create  -->
 
-     <div ng-show = "!gameExists && !insideRoom && !waiting"> 
+     <div ng-show = "!gameExists && !insideRoom && !waiting" style = "width: 50%; margin: 0 auto; margin-top: 10%"> 
       Game  {{gameName}} is empty. Would you like to start this game?
 
       <form ng-submit="createNewGame()" style="margin-top:30px;">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Name?" ng-model="playerName"></input>
-          <input type="text" class="form-control" placeholder="Password?" ng-model="gamePassword"></input>
+          <input type="text" class="form-control" placeholder="Name?" ng-model="playerName" maxlength="10" required></input>
+          <input type="text" class="form-control" placeholder="Password?" ng-model="gamePassword" maxlength="10" ></input>
           <input type="number" class="form-control" placeholder="Max Players?" ng-model="maxPlayers"></input>
           <input type="checkbox" class="form-control" ng-model="publicGame"></input>
         </div>
-        <button type="submit" class="btn btn-primary">Post</button>
+        <button type="submit" class="btn btn-primary">Create Game</button>
       </form>
 
       <h2> {{statusMessage}} </h2>
 
     </div>
+ 
+    <!-- THE ROOM -->
 
-    <div ng-show = "insideRoom"> 
-      YOU ARE NOW INSIDE {{gameName}}, LET THE TURNUPS BEGIN. 
-      <div ng-show = "creator"> The password to this game is {{gamePassword}} - bring your friends! </div>
+    <div ng-show = "insideRoom">
+
+    <div id = "roomHeader" class = "row" style="background-color:#3498db; height: 150px">
+      <h1 class = "text-center"> Game {{gameName}} </h1>
+      <br/>
+      <h2 class = "text-center"> Pass: {{gamePassword}} </h2>
     </div>
 
-	</div>
-</div>
+    <div class = "row">
+
+    <div class = "col-md-9 no-float" >
+
+      <div id = "wordPile" style="background-color: #27ae60; width: 100%; height: 200px" class = "row">
+          WORDPILE IS HERE
+           <div ng-show = "creator"> The password to this game is {{gamePassword}} - bring your friends! </div>
+      </div>
+
+      <div id = "roomFooter" valign="bottom" class = "row" style="background-color:#e67e22; height: 150px;  width: 100%">
+
+      <center>
+
+        <form class="form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+          </div>
+          <button type="submit" class="btn btn-default">GET WORD!</button>
+      </form>
+
+      </center>
+
+      </div>
+    </div>
+
+    <div class = "col-md-3 no-float" id = "chat" >
+      <div id = "messages" style="background-color: #bdc3c7" ng-repeat = "m in messages">
+          <b> {{m.name}} : </b> {{m.text}}
+      </div>
+
+      <div id = "chatFooter" style="position: absolute; bottom: 0;" valign = "bottom">
+        <form class="form-inline" style="width: 100%" ng-submit="sendMessage()">
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model = "messageBody" placeholder="Jane Doe">
+          </div>
+          <button type="submit" class="btn btn-default">Send</button>
+      </form>
+      </div>
+
+    </div>
+
+
+    </div>
+     
+    </div>
+
+
  
