@@ -24,6 +24,35 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 	$scope.messages = $firebaseArray(ref.child('messages'));
 
 	$scope.gameObject.$loaded(function () {
+
+		$scope.messages.$loaded(function() {
+
+			$scope.sendMessage = function() {
+				if ($scope.messageBody.length > 0) {
+					$scope.messages.$add({
+						type: 'message',
+					 	name: $scope.playerName,
+				      	text: $scope.messageBody
+				    });
+				}
+				$scope.messageBody = "";
+			}
+
+			ref.onDisconnect().update({num_players: $scope.gameObject.num_players - 1}, function() {
+				
+				var byeString = $scope.playerName + " has left!"
+
+				$scope.messages.$add({
+					type: 'info',
+				 	name: "",
+			      	text: byeString
+				});
+			}
+			);
+			
+		});
+
+
 		console.log($scope.gameObject);
 
 		if ("players" in $scope.gameObject) {
@@ -115,6 +144,8 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		} else {
 			$scope.waiting = false;
 		}
+
+
 	});
 
 	enterRoom = function() {
@@ -132,18 +163,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 	}
 
-	$scope.messages.$loaded(function() {
+	
 
-		$scope.sendMessage = function() {
-			if ($scope.messageBody.length > 0) {
-				$scope.messages.$add({
-					type: 'message',
-				 	name: $scope.playerName,
-			      	text: $scope.messageBody
-			    });
-			}
-			$scope.messageBody = "";
-		}
-	});
 
 });
