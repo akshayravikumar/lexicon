@@ -70,7 +70,7 @@
 
     <div ng-show = "insideRoom">
 
-    <div style = "height: 100vh; padding-top: 50px, padding-bottom: 50px">
+    <div style = "height: 100vh; margin-top: 50px, margin-bottom: 50px">
 
           <div id = "roomHeader" class = "row" style="background-color:#3498db; height: 50px">
 
@@ -117,19 +117,24 @@
             </div>
           </div>
 
-          <div class = "col m3" id = "chat" >
-            <div id = "messages" style="background-color: #bdc3c7l; overflow: scroll;" ng-repeat = "m in messages">
-            <div ng-if = "m.type == 'message'">
-                <strong> {{m.name}} : </strong> {{m.text}}
-            </div>
+          <div class = "col m3" id = "chat" style = "margin-bottom: -70px">
 
-            <div ng-if = "m.type == 'info'">
-                <em> <b> {{m.text}} </b> </em>
-            </div>
+          <div class = "row" style = "background-color: #bdc3c7l; overflow: scroll; height: 100%;">
+              <div id = "messages" ng-repeat = "m in messages">
+                  <div ng-if = "m.type == 'message'">
+                      <strong> {{m.name}} : </strong> {{m.text}}
+                  </div>
 
-            </div>
+                  <div ng-if = "m.type == 'info'">
+                      <em> <b> {{m.text}} </b> </em>
+                  </div>
 
-            <div id = "chatFooter" style="position: absolute; bottom: 0;" valign = "bottom">
+              </div>
+          </div>
+
+          IN BETWEEN
+
+            <div id = "chatFooter" class = "blue row" style="position: absolute; bottom: 0; height: 20px; clear:both; ">
               <form class="form-inline"ng-submit="sendMessage()">
                 <div class="form-group">
                   <input type="text" class="form-control" ng-model = "messageBody" placeholder="Jane Doe">
