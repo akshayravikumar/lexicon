@@ -8,8 +8,8 @@
 
 	$scope.joinRoom = function(){
 
-		if ($scope.roomName == undefined || $scope.roomName == "") {
-			$scope.errorMessage = "Please enter a valid room name!";
+		if ($scope.roomName == undefined || $scope.roomName == "" || !(/^[a-z0-9]+$/i.test($scope.roomName)) || $scope.roomName.length > 15) {
+			$scope.errorMessage = "This is an invalid room name!  Please choose an alphanumeric name with at most 15 characters.";
 			return;
 		}
 
