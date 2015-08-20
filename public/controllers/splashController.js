@@ -2,7 +2,7 @@
   angular.module('lexiconApp')
   .controller("splashController", function($scope, $location, $firebaseArray) {
 
-  	var fb = new Firebase('https://lexicongame.firebaseio.com/');
+  	// var fb = new Firebase('https://lexicongame.firebaseio.com/');
 
 	$scope.errorMessage = "Welcome! Join a room to get started.";
 

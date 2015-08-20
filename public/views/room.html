@@ -123,6 +123,8 @@
       <div class = "col m3 s1">&nbsp;</div>
 
     </div>
+
+    </div>
  
     <!-- THE ROOM -->
 
@@ -194,7 +196,7 @@
 
           <div class = "col m3" id = "chat" style = "height: 90vh;">
 
-          <div class = "row" style = "height: 90vh; background-color: #bdc3c7l; overflow: scroll; height: 100%;" scroll>
+          <div class = "row" style = "height: 90vh; background-color: #bdc3c7l; overflow: scroll; height: 100%;" scroll-glue>
               <div id = "messages" ng-repeat = "m in messages">
                   <div ng-if = "m.type == 'message'">
                       <strong> {{m.name}} : </strong> {{m.text}}
