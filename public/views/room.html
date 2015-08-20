@@ -3,25 +3,32 @@
 
 	 <!-- waiting for db query  -->
 	<div ng-show = "!insideRoom && waiting" class="center-align" style = "width : 50%; margin: auto; margin-top: 10%; ">
-	 
-   <div class = "statusMessage">
-   {{waitingMessage}}
-   </div>
-
-   <br/>
-
-    <div class="preloader-wrapper big active">
-    <div class="spinner-layer spinner-blue-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
-      </div>
-    </div>
-  </div>
+	  <div class = "row">
         
+        <div class = "col m3 s1">&nbsp;</div>
+
+        <div class = "col m6 s10">
+             <div class = "statusMessage">
+               {{waitingMessage}}
+               </div>
+
+               <br/>
+
+                <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class = "col m3 s1">&nbsp;</div>
+       
 	</div>
 
 	<!-- game exists, prompt for name  -->
