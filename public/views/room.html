@@ -58,7 +58,7 @@
 
         </div>
 
-        <div class = "col m3 s1">..</div>
+        <div class = "col m3 s1">&nbsp;</div>
 
         </div>
 
@@ -66,7 +66,13 @@
 
       <!-- game doesn't exist, prompt to create  -->
 
-     <div ng-show = "!gameExists && !insideRoom && !waiting" style = "width: 50%; margin: 0 auto; margin-top: 10%"> 
+     <div ng-show = "!gameExists && !insideRoom && !waiting" style = "margin: 0 auto; margin-top: 10%"> 
+
+     <div class = "row">
+        
+        <div class = "col m3 s1">&nbsp;</div>
+
+        <div class = "col m6 s10">
 
      <div class = "statusMessage center-align">
           Game  {{gameName}} is empty. Fill in a few things and get started!
@@ -79,10 +85,17 @@
           <input type="number" style = "font-size: 30px"  placeholder="Max Players?"  ng-model="maxPlayers"value="4"></input>
           <input type="checkbox" class="form-control" ng-model="publicGame"></input>
         </div>
-        <button type="submit" class="btn btn-primary">Create Game</button>
+        <center>
+          <br/>
+            <button type="submit" class="center-align waves-effect waves-light btn-large">Create Game</button>
+          </center>
       </form>
 
-      <h2> {{statusMessage}} </h2>
+      <div class = "statusMessage"> {{statusMessage}} </div>
+
+      </div>
+
+      <div class = "col m3 s1">&nbsp;</div>
 
     </div>
  
