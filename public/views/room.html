@@ -1,22 +1,29 @@
 
-	<!-- <div id="splash-container" class="page-fill"> -->	 
 
-	 <!-- waiting for db query  -->
+	 <!-- if game has an invalid name  -->
 
   <div ng-show = "gameInvalid"> 
-  <div class = "row">
-  <div class = "col m3 s1"> &nbsp; </div>
-  <div class = "col m6 s10" style = "margin-top: 10%">
-    <div class = "statusMessage center-align"> 
-        <i class="material-icons" style = "font-size: 200px">report_problem</i> <br/>
-        {{invalidMessage}} 
+    <div class = "row">
+      <div class = "col m3 s1"> &nbsp; </div>
+      
+      <div class = "col m6 s10" style = "margin-top: 10%">
+         <div class = "statusMessage center-align"> 
+            <i class="material-icons" style = "font-size: 200px">report_problem</i> <br/>
+            {{invalidMessage}} 
+        </div>
+      </div>
+
+      <div class = "col m3 s1"> &nbsp; </div>
     </div>
   </div>
-  <div class = "col m3 s1"> &nbsp; </div>
-  </div>
 
-	<div ng-show = "!insideRoom && waiting && !gameInvalid" class="center-align" style = "width : 50%; margin: auto; margin-top: 10%; ">
+
+  <!-- while searching for game in database  -->
+
+	<div ng-show = "!insideRoom && waiting && !gameInvalid" class="center-align" style = "margin: auto; margin-top: 10%; ">
 	  <div class = "row">
+
+    hi
         
         <div class = "col m3 s1">&nbsp;</div>
 

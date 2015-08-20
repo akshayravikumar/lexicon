@@ -1,18 +1,11 @@
 angular.module('lexiconApp').controller('roomController', 
 function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
+	isValidRoom = function() {
 
-	$scope.gameInvalid = true;
+	$scope.gameInvalid = false;
 
-	if (/^[a-z0-9]+$/i.test($routeParams.name) && $routeParams.name.length <= 15) {
-		$scope.gameInvalid = false;
-	} 
-	else {
-		$scope.invalidMessage = "This game name is invalid. Please choose an alphanumeric name less than 15 characters."
-	} 
-
-	if (!$scope.gameInvalid) {
-	
+	console.log("hi");
 
 	$scope.playerName = "";
 	$scope.insideRoom = false;
@@ -142,13 +135,6 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 			}
 		}
 
-		if ($scope.gameObject.num_players >= $scope.gameObject.max_players) {
-			$scope.waitingMessage = "Sorry, this game is full. Feel free to start a new one!";
-		} else {
-			$scope.waiting = false;
-
-		}
-
 		console.log(playerName + " is the name");
 
 		/* ----------------------------------------------------------------------- */
@@ -239,6 +225,12 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		  return array;
 		}
 
+		if ($scope.gameObject.num_players >= $scope.gameObject.max_players) {
+			$scope.waitingMessage = "Sorry, this game is full. Feel free to start a new one!";
+		} else {
+			$scope.waiting = false;
+		}
+
 	});	
 
 	});
@@ -260,11 +252,12 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		while (lo < hi) {
 
 			var mid = Math.floor((lo + hi)/2);
+
 			if (words[mid] < word) {
 				lo = mid + 1;
 			} else if (words[mid] == word) {
 				return true;
-			} else if (words[mid] >= word) {
+			} else {
 				hi = mid;
 			}
 		}
@@ -337,8 +330,17 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		return true;
 	}
-
 }
+
+
+	$scope.gameInvalid = true;
+
+	if (/^[a-z0-9]+$/i.test($routeParams.name) && $routeParams.name.length <= 15) {
+		isValidRoom();
+	} 
+	else {
+		$scope.invalidMessage = "This game name is invalid. Please choose an alphanumeric name less than 15 characters."
+	} 
 
 
 });
