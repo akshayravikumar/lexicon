@@ -1,9 +1,17 @@
 angular.module('lexiconApp').controller('roomController', 
 function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
-	isValidRoom = function() {
 
-	$scope.gameInvalid = false;
+	$scope.gameInvalid = true;
+
+	if (/^[a-z0-9]+$/i.test($routeParams.name) && $routeParams.name.length <= 15) {
+		$scope.gameInvalid = false;
+	} 
+	else {
+		$scope.invalidMessage = "This game name is invalid. Please choose an alphanumeric name less than 15 characters."
+	} 
+
+	if (!$scope.gameInvalid) {
 
 	console.log("hi");
 
@@ -330,17 +338,8 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		return true;
 	}
+
 }
-
-
-	$scope.gameInvalid = true;
-
-	if (/^[a-z0-9]+$/i.test($routeParams.name) && $routeParams.name.length <= 15) {
-		isValidRoom();
-	} 
-	else {
-		$scope.invalidMessage = "This game name is invalid. Please choose an alphanumeric name less than 15 characters."
-	} 
 
 
 });

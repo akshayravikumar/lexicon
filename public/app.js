@@ -1,4 +1,4 @@
-angular.module('lexiconApp', ["ngRoute", "firebase", "ngAnimate"]) // ,'n3-pie-chart'
+angular.module('lexiconApp', ["ngRoute", "firebase", "ngAnimate",  'ngFitText' ]) // ,'n3-pie-chart'
 //routing definitions
 .config(['$routeProvider', '$locationProvider',
 	function($routeProvider, $locationProvider) {
