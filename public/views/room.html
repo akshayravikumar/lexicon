@@ -8,7 +8,7 @@
       
       <div class = "col m6 s10" style = "margin-top: 10%">
          <div class = "statusMessage center-align"> 
-            <i class="material-icons" style = "font-size: 200px">report_problem</i> <br/>
+            <i class="material-icons" style = "font-size: 200px">error_outline</i> <br/>
             {{invalidMessage}} 
         </div>
       </div>
@@ -16,6 +16,10 @@
       <div class = "col m3 s1"> &nbsp; </div>
     </div>
   </div>
+
+
+
+
 
 
   <!-- while searching for game in database  -->
@@ -48,6 +52,15 @@
   
       </div> 
 	</div>
+
+
+
+
+
+
+
+
+
 
 	<!-- game exists, prompt for name  -->
 
@@ -87,9 +100,9 @@
 
         </div>
 
-      </div>
+      </div> 
 
-      <!-- game doesn't exist, prompt to create  -->
+    <!-- game doesn't exist, prompt to create  -->
 
      <div ng-show = "!gameExists && !insideRoom && !waiting && !gameInvalid" style = "margin: 0 auto; margin-top: 10%"> 
 
@@ -107,7 +120,7 @@
         <div class="form-group">
           <input type="text"  placeholder="Name" style = "font-size: 30px"  ng-model="playerName" maxlength="10" required></input>
           <input type="text"  style = "font-size: 30px"  placeholder="Password (leave blank for no password)" ng-model="gamePassword" maxlength="10" ></input>
-          <input type="number" style = "font-size: 30px"  placeholder="Max Players?"  ng-model="maxPlayers"value="4"></input>
+          <input type="number" style = "font-size: 30px"  placeholder="Max Players?"  ng-model="maxPlayers" value="4" max = "6"></input>
           <input type="checkbox" class="form-control" ng-model="publicGame"></input>
         </div>
         <center>
@@ -125,40 +138,70 @@
     </div>
 
     </div>
+
+
+
+
+
+
+
+
  
     <!-- THE ROOM -->
 
     <div ng-show = "insideRoom">
 
-    <div style = "height: 90vh; margin-top: 50px, margin-bottom: 50px">
+    <div style = "height: 90%;">
 
           <div id = "roomHeader" class = "row" style="background-color:#3498db; height: 50px">
 
               <!-- stuff  -->
-              <div class = "col m3" >
+              <div class = "col m3" > 
+                &nbsp;
               </div>
               <!-- center -->
-              <div class = "col m6" >
-               <h2 class = "center-align" style = "font-size: 24px"> Game {{gameName}} </h2>
+              <div class = "col m6 valign-wrapper" style = "height: 100%">
+               <h2 class = "center-align valign" style = "font-size: 24px"> Game {{gameName}} </h2>
               </div>
 
               <!-- info  -->
-              <div class = "col m3" >
-                <div class = "right-align">
+              <div class = "col m3 valign-wrapper" style = "height: 100%" >
+                <div class = "right-align valign">
                   <div ng-show = "creator" > <b> Password: </b> {{gamePassword}} </div> 
-                  There are <b> {{gameObject.num_players}} </b> players.
+                  Players: <b> {{gameObject.num_players}}/{{gameObject.max_players}} </b> 
                 </div>
-              </div>
-                   
+              </div>      
           </div>
 
           <div class = "row">
 
           <div class = "col m9" >
 
+          <div style = "height: 150px;">
+
+           <table style = "table-layout:fixed; width: 100%">
+            <tr>
+              <td ng-repeat = "(player, data) in gameObject.players" style = "overflow-y: scroll; border-right: solid 2px #f00; border-left: solid 2px #f00;"> 
+               <div class = "center-align" > {{player}} </div>  
+               <div class = "center-align" > {{data.points}} </div>
+
+                <div ng-if "data.words.length > 0" ng-repeat = "word in data.words">
+                    <a ng-click = "submitWord()"> {{word}} </a>
+                </div>
+
+                 <div ng-if "!('words' in data) || data.words.length == 0">
+                    No words yet.
+                </div>
+
+              </td> 
+            </tr>
+            </table>
+
+          </div>
+
           <button ng-click = "addLetter()"> Add Letter </button>
 
-            <div id = "wordPile" style="background-color: #27ae60; width: 100%; height: 200px" class = "row">
+            <div id = "wordPile" style="background-color: #27ae60; width: 100%; height: 200px; overflow: scroll" class = "row">
             <table style = "table-layout:fixed; width: 100%">
 
                <tr ng-repeat = "i in [0,1,2,3,4,5,6,7,8,9,10,11,12, 13, 14, 15, 16, 17, 18, 19]" style = "width: 35px"> 
@@ -174,8 +217,6 @@
 
               </table>
 
-                WORDPILE IS HERE
-                 <div ng-show = "creator"> The password to this game is {{gamePassword}} - bring your friends! </div>
             </div>
 
             <div id = "roomFooter" valign="bottom" class = "row" style="background-color:#e67e22; height: 150px;  width: 100%">
@@ -194,16 +235,16 @@
             </div>
           </div>
 
-          <div class = "col m3" id = "chat" style = "height: 90vh;">
+          <div class = "col m3  blue-grey lighten-4" id = "chat" style = "height: 90vh;">
 
-          <div class = "row" style = "height: 90vh; background-color: #bdc3c7l; overflow: scroll; height: 100%;" scroll-glue>
+          <div class = "row" style = "background-color: #bdc3c7l; overflow-y: scroll; height: 100%;" class = "wordwrap" scroll-glue>
               <div id = "messages" ng-repeat = "m in messages">
                   <div ng-if = "m.type == 'message'">
-                      <strong> {{m.name}} : </strong> {{m.text}}
+                      <strong> {{m.name}}: </strong> {{m.text}}
                   </div>
 
                   <div ng-if = "m.type == 'info'">
-                      <em> <b> {{m.text}} </b> </em>
+                      <em> {{m.text}} </em>
                   </div>
 
               </div>
@@ -211,10 +252,10 @@
 
           IN BETWEEN
 
-            <div id = "chatFooter" class = "blue row" style="position: absolute; bottom: 0; height: 20px; clear:both; ">
-              <form class="form-inline"ng-submit="sendMessage()">
-                <div class="form-group">
-                  <input type="text" class="form-control" ng-model = "messageBody" placeholder="Jane Doe">
+            <div id = "chatFooter" class = "row" style="position: absolute; bottom: 0; height: 20px; clear:both;">
+              <form ng-submit="sendMessage()" style = "width: 100%">
+                <div class="input-field">
+                  <input type="text" class="form-control" ng-model = "messageBody" placeholder="Enter to send">
                 </div>
                 <button type="submit" hidden>Send</button>
             </form>
@@ -227,6 +268,11 @@
           </div>
 
     </div>
+
+
+
+
+
 
     <script>
    // target elements with the "draggable" class

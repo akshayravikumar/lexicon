@@ -2,6 +2,16 @@ angular.module('lexiconApp').controller('roomController',
 function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 
+	$scope.$on('$locationChangeStart', function( event ) {
+		console.log("bye");
+		alert("bye");
+	    var answer = confirm("Are you sure you want to leave this page?")
+	    if (!answer) {
+	        event.preventDefault();
+	    }
+	});
+
+
 	$scope.gameInvalid = true;
 
 	if (/^[a-z0-9]+$/i.test($routeParams.name) && $routeParams.name.length <= 15) {
@@ -11,10 +21,13 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		$scope.invalidMessage = "This game name is invalid. Please choose an alphanumeric name less than 15 characters."
 	} 
 
+
+	// first, make sure the game name is valid 
+
 	if (!$scope.gameInvalid) {
 
 	console.log("hi");
-
+	$scope.gamePassword = "";
 	$scope.playerName = "";
 	$scope.insideRoom = false;
 	$scope.creator = false;
@@ -30,9 +43,6 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 	$scope.letters = [];
 	$scope.gameName = $routeParams.name;
-
-	// var game = games.postData("/find", {roomname: $scope.gameName});
-	// console.log(game);
 
 	var ref = new Firebase("https://lexicongame.firebaseio.com/" + $routeParams.name);
 
@@ -51,7 +61,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		console.log($scope.gameObject);
 
-		if ("players" in $scope.gameObject) {
+		if ("started" in $scope.gameObject) {
 			$scope.gameExists = true;
 		} 
 		else {$scope.gameExists = false;}
@@ -173,19 +183,21 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 		      	text: welcomeString
 			});
 
-			ref.child("players").child(playerName).onDisconnect().remove(function() {
+			// ref.child("players").child(playerName).onDisconnect().remove(function() {
 
-				ref.update({num_players : $scope.gameObject.num_players - 1});
+			// 	ref.update({num_players : $scope.gameObject.num_players - 1});
 				
-				var byeString = playerName + " has left!";
+			// 	var byeString = playerName + " has left!";
 
-					$scope.messages.$add({
-						type: 'info',
-					 	name: "",
-				      	text: byeString
-					});
-				}
-			);
+			// 		$scope.messages.$add({
+			// 			type: 'info',
+			// 		 	name: "",
+			// 	      	text: byeString
+			// 		});
+			// 	}
+			// );
+
+
 
 
 		}

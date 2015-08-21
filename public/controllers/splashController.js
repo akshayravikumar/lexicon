@@ -1,8 +1,10 @@
 //search view controller - add stuff here later
   angular.module('lexiconApp')
-  .controller("splashController", function($scope, $location, $firebaseArray) {
+  .controller("splashController", function($scope, $location, $firebaseObject) {
 
-  	// var fb = new Firebase('https://lexicongame.firebaseio.com/');
+  	var fb = new Firebase('https://lexicongame.firebaseio.com/');
+
+  	$scope.games = $firebaseObject(fb);
 
 	$scope.errorMessage = "Welcome! Join a room to get started.";
 
