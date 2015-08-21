@@ -27,16 +27,6 @@ app.engine('html', function(path, options, cb) {
 // POST request body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// connect to database
-// mongoose.createConnection(dbConfig.uri);
-
-// configure Passport
-// require('./server/config/passport')(passport); // pass passport for configuration
-
-app.use(session({ secret: 'fleeksesh',
-                  saveUninitialized: true,
-                  resave: true}));
  
 // add routes
 app.use('/', routes);
@@ -45,6 +35,11 @@ app.use('/', routes);
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
 });
+
+app.use(function(req, res) {
+    res.sendfile(__dirname + '/public/views/index.html');
+});
+
 
 // set port, listen and log 
 app.listen(port, function() {

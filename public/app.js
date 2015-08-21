@@ -21,14 +21,6 @@ angular.module('lexiconApp', ["ngRoute", "firebase", "ngAnimate",  'ngFitText' ,
     $locationProvider.html5Mode(true);
 }])
 
-.run(function($route, $rootScope, $location, $routeParams) {
-    //watch for route changes and redirect accordingly
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-    	//set current variable to template (used in showing/hiding elements)
-    	$rootScope.current = next.templateUrl;
-    	//check to see if user is authenticated
-	});
-})
 .directive('scroll', function($timeout) {
   return {
     restrict: 'A',
