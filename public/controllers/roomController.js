@@ -22,6 +22,9 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 	$scope.insideRoom = false;
 	$scope.creator = false;
 	$scope.publicGame = false;
+	$scope.gameStarted = false;
+	$scope.stealFromPile = true;
+
 	var playerName;
 
 	$scope.maxPlayers = 4;
@@ -70,7 +73,12 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 			var letters = "AAAAAAAAAAAAABBBCCCDDDDDDEEEEEEEEEEEEEEEEEEFFFGGGGHHHIIIIIIIIIIIIJJKKLLLLLMMMNNNNNNNNOOOOOOOOOOOPPPQQRRRRRRRRRSSSSSSTTTTTTTTTUUUUUUVVVWWWXXYYYZZ"
     
     		var letterArr = letters.split("");
+
     		shuffle(letterArr);
+    		shuffle(letterArr);
+    		shuffle(letterArr);
+    		shuffle(letterArr);
+
 			var gameData = {
 				max_players: $scope.maxPlayers,
 				num_players: 1, 
@@ -348,6 +356,131 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 }
 
+$scope.startGame = function() {
+	ref.update({started: true}, function() {				
 
+	});
+}
+
+		$scope.attemptSteal = function() {
+				if ($scope.stealFromPile) {
+					console.log($scope.activeLetters);
+
+					var letters = new Object();
+
+					for (var i = 0; i < $scope.stealWord.toUpperCase().length; i++) {
+						var c = $scope.stealWord[i].toUpperCase();
+						if (c in letters) {
+							letters[c]++;
+						} else {
+							letters[c] = 1;
+						}
+					}
+
+					console.log(letters);
+
+					for (var i = 0; i < $scope.activeLetters.length; i++) {
+						if ($scope.activeLetters[i].$value in letters) {
+							letters[$scope.activeLetters[i].$value]--;
+						} 
+					}
+
+					console.log(letters);
+
+					var isSteal = true;
+
+					for (var l in letters) {
+						if (letters[l] > 0) {
+							isSteal = false;
+						}
+					}
+
+					if (isSteal) {
+						if (isAWord($scope.stealWord)) {
+
+							$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
+								ref.child('players').child(playerName).update({points : 100}).then(function(){
+									alert("youre a winner!");
+									$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+									return;
+								});
+							});
+
+							return;
+
+						} else {
+
+							$scope.stealStatusMessage = "Sorry, you have the right letters, but this isn't a real word.";
+							return;
+						}
+
+					} else {
+
+						$scope.stealStatusMessage = "Sorry, this doesn't use the letters in the pile.";
+						return;
+					}
+
+
+				} else {
+
+					alert("Trying to steal " + $scope.attemptToSteal + " with " + $scope.stealWord);
+					
+					var letters = new Object();
+
+					var remainingLetters = isSteal($scope.stealWord, $scope.attemptToSteal);
+
+					if (!remainingLetters) {
+						$scope.statusMessage = "Sorry, this isn't a valid steal of the word.";
+						return;
+					}
+
+					for (var i = 0; i < $scope.activeLetters.length; i++) {
+						if ($scope.activeLetters[i].$value in remainingLetters) {
+							remainingLetters[$scope.activeLetters[i].$value]--;
+						} 
+					}
+
+					var fromPile = true;
+
+					for (var l in letters) {
+						if (remainingLetters[l] > 0) {
+							fromPile = false;
+						}
+					}
+
+					if (!fromPile) {
+						$scope.stealStatusMessage = "Sorry, this is a steal, but it doesn't use the letters in the pile.";
+						return;
+					}
+
+					if (!isWord($scope.stealWord)) {
+						$scope.stealStatusMessage = "Sorry, this is a steal, but it isn't a real word.";
+						return;
+					}
+
+					if (!isNonTrivial($scope.stealWord, $scope.attemptToSteal)) {
+						$scope.stealStatusMessage = "Sorry, this is a valid steal, but it is trivial.";
+						return;
+					}
+
+					$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
+								ref.child('players').child(playerName).update({points : 100}).then(function(){
+									alert("youre a winner!");
+									$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+									return;
+								});
+							});
+
+					return;
+
+				}
+
+			}
+
+
+		$scope.focusOnWord = function(word) {
+			$scope.stealFromPile = false; 
+			$scope.attemptToSteal = word;
+		}
 
 });
