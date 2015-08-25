@@ -395,30 +395,30 @@ $scope.startGame = function() {
 						}
 					}
 
-					if (isSteal) {
-						if (isAWord($scope.stealWord)) {
+					if (!isSteal) {
+						$scope.stealStatusMessage = "Sorry, this doesn't use the letters in the pile.";
+						return;
+					} else {
+ 
+						if (!isAWord($scope.stealWord)) {
+								$scope.stealStatusMessage = "Sorry, you have the right letters, but this isn't a real word.";
+								return;
+						} else {
 
 							$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
-								ref.child('players').child(playerName).update({points : 100}).then(function(){
+								ref.child('players').child(playerName).update({points : $scope.gameObject.players[playerName].points + $scope.stealWord.length - 3}).then(function(){
 									alert("youre a winner!");
 									$scope.stealStatusMessage  = "Congrats! This steal is valid.";
 									return;
 								});
 							});
 
-							return;
-
-						} else {
-
-							$scope.stealStatusMessage = "Sorry, you have the right letters, but this isn't a real word.";
-							return;
 						}
 
-					} else {
-
-						$scope.stealStatusMessage = "Sorry, this doesn't use the letters in the pile.";
-						return;
 					}
+
+					
+					return;
 
 
 				} else {
@@ -451,25 +451,32 @@ $scope.startGame = function() {
 					if (!fromPile) {
 						$scope.stealStatusMessage = "Sorry, this is a steal, but it doesn't use the letters in the pile.";
 						return;
-					}
+					} else {
 
-					if (!isWord($scope.stealWord)) {
-						$scope.stealStatusMessage = "Sorry, this is a steal, but it isn't a real word.";
-						return;
-					}
+						if (!isWord($scope.stealWord)) {
+							$scope.stealStatusMessage = "Sorry, this is a steal, but it isn't a real word.";
+							return;
+						} else {
 
-					if (!isNonTrivial($scope.stealWord, $scope.attemptToSteal)) {
-						$scope.stealStatusMessage = "Sorry, this is a valid steal, but it is trivial.";
-						return;
-					}
+							if (!isNonTrivial($scope.stealWord, $scope.attemptToSteal)) {
+								$scope.stealStatusMessage = "Sorry, this is a valid steal, but it is trivial.";
+								return;
+							} else {
 
-					$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
-								ref.child('players').child(playerName).update({points : 100}).then(function(){
-									alert("youre a winner!");
-									$scope.stealStatusMessage  = "Congrats! This steal is valid.";
-									return;
+								$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
+									ref.child('players').child(playerName).update({points : $scope.gameObject.players[playerName].points + $scope.stealWord.length - 3}).then(function(){
+										alert("youre a winner!");
+										$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+										return;
+									});
 								});
-							});
+
+							}
+
+						}
+
+					}
+					
 
 					return;
 

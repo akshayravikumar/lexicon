@@ -74,3 +74,7 @@ main {
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
 }
+
+.wordlink::hover {
+  color: yellow;
+}
