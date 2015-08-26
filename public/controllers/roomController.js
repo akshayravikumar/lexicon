@@ -290,7 +290,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 	}
 
 
-	var isSteal = function(attempt, word) {
+	var isValidSteal = function(attempt, word) {
 		var letters = {};
 
 		for (var i = 0; i < word.length; i++) {
@@ -362,6 +362,8 @@ $scope.startGame = function() {
 	});
 }
 
+
+
 		$scope.attemptSteal = function() {
 				if ($scope.stealFromPile) {
 					console.log($scope.activeLetters);
@@ -427,7 +429,12 @@ $scope.startGame = function() {
 					
 					var letters = new Object();
 
-					var remainingLetters = isSteal($scope.stealWord, $scope.attemptToSteal);
+					var remainingLetters;
+
+					if (remainingLetters = isValidSteal($scope.stealWord, $scope.attemptToSteal)) {
+
+					console.log("ko");
+					console.log(remainingLetters);
 
 					if (!remainingLetters) {
 						$scope.statusMessage = "Sorry, this isn't a valid steal of the word.";
@@ -440,9 +447,11 @@ $scope.startGame = function() {
 						} 
 					}
 
+					console.log(remainingLetters);
+
 					var fromPile = true;
 
-					for (var l in letters) {
+					for (var l in remainingLetters) {
 						if (remainingLetters[l] > 0) {
 							fromPile = false;
 						}
@@ -463,10 +472,16 @@ $scope.startGame = function() {
 								return;
 							} else {
 
+								var currpoints = $scope.gameObject.players[playerName].points;
+
+								if (currpoints == undefined) {
+									currpoints = 0;
+								}
+
+
 								$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
-									ref.child('players').child(playerName).update({points : $scope.gameObject.players[playerName].points + $scope.stealWord.length - 3}).then(function(){
-										alert("youre a winner!");
-										$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+									ref.child('players').child(playerName).update({points : currpoints + $scope.stealWord.length - 3}).then(function(){
+ 										$scope.stealStatusMessage  = "Congrats! This steal is valid.";
 										return;
 									});
 								});
@@ -477,6 +492,7 @@ $scope.startGame = function() {
 
 					}
 					
+					}
 
 					return;
 

@@ -227,7 +227,7 @@
 
             <center>
 
-              <form style = "width:50%; margin: auto;" ng-submit = "attemptSteal()">
+              <form style = "width:50%; margin: auto;">
               <div ng-show = "stealFromPile"> 
                 Attempting to make a word from the pile...
                </div>
@@ -237,10 +237,11 @@
                 <div class="input-field">
                   <input type="text" class="form-control" ng-model="stealWord" placeholder="Type steal here" required>
                 </div>
-                <button type="submit" class="waves-effect waves-light btn-large">GET WORD!</button> 
-                <button ng-click="stealFromPile = true;" class="waves-effect waves-light btn-large">Steal from pile.</button>
-                <div class = "statusMessage"> {{stealStatusMessage}} </div>
             </form>
+
+            <button type="submit"  ng-click = "attemptSteal()" class="waves-effect waves-light btn-large">GET WORD!</button> 
+            <button ng-click="stealFromPile = true;" class="waves-effect waves-light btn-large">Steal from pile.</button>
+            <div class = "statusMessage"> {{stealStatusMessage}} </div>
 
             </center>
 
