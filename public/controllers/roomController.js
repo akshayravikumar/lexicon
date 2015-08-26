@@ -211,18 +211,43 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		$scope.remainingLetters.$loaded(function() {
 				$scope.remainingLetters.$loaded(function() {
-					$scope.addLetter = function() {
-
-						console.log("trying to add letter");
-						console.log($scope.activeLetters);
-						console.log($scope.remainingLetters);
-						
+					$scope.addLetter = function() {						
 						$scope.activeLetters.$add($scope.remainingLetters[index]).then(
 						function() {
 							index++;
 						});
 						
 					}
+
+
+
+					$scope.removeLetters = function(letters) {
+
+						console.log(letters);
+
+						var removeLetter = function(index) {
+
+							if (index == letters.length) {
+								return;
+							}
+
+							var l = letters[index];
+							console.log("letter " + l);
+							for (var i = 0; i < $scope.activeLetters.length; i++) {
+ 								if (l.toUpperCase() == $scope.activeLetters[i].$value.toUpperCase()) {
+									$scope.activeLetters.$remove(i).then(function(ref) {
+									  removeLetter(index + 1);
+									});	
+								}
+							}
+						};
+
+						removeLetter(0);
+
+					}
+
+
+
 				});
 			});
 
@@ -301,6 +326,8 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 				letters[c] = 1;
 			}
 		}
+
+		console.log(attempt + " " + word);
 
 		console.log("letters");
 		console.log(letters);
@@ -408,11 +435,12 @@ $scope.startGame = function() {
 						} else {
 
 							$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
-								ref.child('players').child(playerName).update({points : $scope.gameObject.players[playerName].points + $scope.stealWord.length - 3}).then(function(){
-									alert("youre a winner!");
-									$scope.stealStatusMessage  = "Congrats! This steal is valid.";
-									return;
-								});
+
+
+								$scope.removeLetters($scope.stealWord.split(""));
+								ref.child('players').child(playerName).update({points : $scope.gameObject.players[playerName].points + $scope.stealWord.length - 3});
+								$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+								return;
 							});
 
 						}
@@ -431,9 +459,9 @@ $scope.startGame = function() {
 
 					var remainingLetters;
 
-					if (remainingLetters = isValidSteal($scope.stealWord, $scope.attemptToSteal)) {
+					if (remainingLetters = isValidSteal($scope.attemptToSteal, $scope.stealWord)) {
 
-					console.log("ko");
+					console.log("ok");
 					console.log(remainingLetters);
 
 					if (!remainingLetters) {
@@ -462,7 +490,7 @@ $scope.startGame = function() {
 						return;
 					} else {
 
-						if (!isWord($scope.stealWord)) {
+						if (!isAWord($scope.stealWord)) {
 							$scope.stealStatusMessage = "Sorry, this is a steal, but it isn't a real word.";
 							return;
 						} else {
@@ -478,12 +506,12 @@ $scope.startGame = function() {
 									currpoints = 0;
 								}
 
-
 								$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
-									ref.child('players').child(playerName).update({points : currpoints + $scope.stealWord.length - 3}).then(function(){
- 										$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+										$scope.removeLetters(remainingLetters);
+										ref.child('players').child(playerName).update({points : currpoints + $scope.stealWord.length - 3});
+	 									$scope.stealStatusMessage   = "Congrats! This steal is valid.";
 										return;
-									});
+									 
 								});
 
 							}
@@ -505,5 +533,6 @@ $scope.startGame = function() {
 			$scope.stealFromPile = false; 
 			$scope.attemptToSteal = word;
 		}
+
 
 });
