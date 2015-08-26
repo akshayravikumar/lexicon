@@ -186,7 +186,7 @@
                <div class = "center-align" > {{data.points}}  points </div>
 
                 <div ng-repeat = "word in data['words']">
-                    <a class = "wordlink" ng-click = "focusOnWord(word)"> {{word}} </button>
+                    <a class = "wordlink" ng-click = "focusOnWord(word, player)"> {{word}} </button>
                 </div>
 
                  <div ng-if "(!('words' in data)) || (data.words.length == 0)">
@@ -251,7 +251,7 @@
           <div class = "col m3  blue-grey lighten-4" id = "chat" style = "height: 90vh;">
 
           <div class = "row" style = "background-color: #bdc3c7l; overflow-y: scroll; height: 100%;" class = "wordwrap" scroll-glue>
-            
+
               <div id = "messages" ng-repeat = "m in messages">
                   <div ng-if = "m.type == 'message'">
                       <strong> {{m.name}}: </strong> {{m.text}}

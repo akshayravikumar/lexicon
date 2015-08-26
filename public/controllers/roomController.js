@@ -508,10 +508,23 @@ $scope.startGame = function() {
 
 								$firebaseArray(ref.child('players').child(playerName).child('words')).$add($scope.stealWord).then(function() {
 										$scope.removeLetters(remainingLetters);
+
 										ref.child('players').child(playerName).update({points : currpoints + $scope.stealWord.length - 3});
+
+										console.log($scope.playerToStealFrom);
+
+										console.log($scope.attemptToSteal);
+
+										for (var i = 0; i < $scope.gameObject.players[$scope.playerToStealFrom].words.length; i++) {
+											if ($scope.gameObject.players[$scope.playerToStealFrom].words[i].toUpperCase() == $scope.attemptToSteal.toUpperCase()) {
+												$firebaseArray(ref.child('players').child($scope.playerToStealFrom).child('words')).$remove(i);
+											}
+										}
+	
+										
 	 									$scope.stealStatusMessage   = "Congrats! This steal is valid.";
 										return;
-									 
+									 	
 								});
 
 							}
@@ -529,9 +542,10 @@ $scope.startGame = function() {
 			}
 
 
-		$scope.focusOnWord = function(word) {
+		$scope.focusOnWord = function(word, player) {
 			$scope.stealFromPile = false; 
 			$scope.attemptToSteal = word;
+			$scope.playerToStealFrom = player;
 		}
 
 
