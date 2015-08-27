@@ -1,5 +1,5 @@
 angular.module('lexiconApp').controller('roomController', 
-function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
+function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $timeout){
 
 
 	$scope.gameInvalid = true;
@@ -91,6 +91,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 				number_turns: 0,
 				remainingLetters : letterArr,
 				usedLetters: [],
+				letter_index : 0,
 				players: {},
 				messages: []
 			};
@@ -211,11 +212,16 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray){
 
 		$scope.remainingLetters.$loaded(function() {
 				$scope.remainingLetters.$loaded(function() {
-					$scope.addLetter = function() {						
+					$scope.addLetter = function() {
+						$scope.addLetterButtonDisabled = true;
+						var index = $scope.gameObject.letter_index;
 						$scope.activeLetters.$add($scope.remainingLetters[index]).then(
 						function() {
-							index++;
+							ref.update({letter_index : index + 1});
 						});
+
+						
+						$timeout(function(){ $scope.addLetterButtonDisabled = false; }, 3000);
 						
 					}
 
@@ -515,10 +521,19 @@ $scope.startGame = function() {
 
 										console.log($scope.attemptToSteal);
 
-										for (var i = 0; i < $scope.gameObject.players[$scope.playerToStealFrom].words.length; i++) {
-											if ($scope.gameObject.players[$scope.playerToStealFrom].words[i].toUpperCase() == $scope.attemptToSteal.toUpperCase()) {
-												$firebaseArray(ref.child('players').child($scope.playerToStealFrom).child('words')).$remove(i);
-											}
+										console.log("asdasdfasdfasdfasdfasdfasdfas");
+
+										console.log($scope.gameObject);
+										console.log($scope.gameObject.players);
+										console.log($scope.gameObject.players[$scope.playerToStealFrom]);
+										console.log($scope.gameObject.players[$scope.playerToStealFrom].words);
+										console.log(Object.keys($scope.gameObject.players[$scope.playerToStealFrom].words).length);
+										for (var i = 0; i < Object.keys($scope.gameObject.players[$scope.playerToStealFrom].words).length; i++) {
+											console.log($scope.gameObject.players[$scope.playerToStealFrom].words[i] + " " + $scope.attemptToSteal.toUpperCase());
+											// if ($scope.gameObject.players[$scope.playerToStealFrom].words[i].$value.toUpperCase() == $scope.attemptToSteal.toUpperCase()) {
+											// 	$firebaseArray(ref.child('players').child($scope.playerToStealFrom).child('words')).$remove(i);
+											// 	break;
+											// }
 										}
 	
 										
