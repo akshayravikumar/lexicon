@@ -221,7 +221,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 						});
 
 						
-						// $timeout(function(){ $scope.addLetterButtonDisabled = false; }, 3000);
+						$timeout(function(){ $scope.addLetterButtonDisabled = false; }, 3000);
 						
 					}
 
@@ -543,7 +543,7 @@ $scope.startGame = function() {
 											console.log("hi");
 											console.log(loserWords[word].toUpperCase() + " " + attemptToSteal.toUpperCase());
 											ref.child('players').child($scope.playerToStealFrom).child('words').child(word).remove();
-											ref.child('players').child(playerName).update({points : otherpoints - (stealWord.length - 3)});
+											ref.child('players').child(playerName).update({points : otherpoints - (attemptToSteal.length - 3)});
 											break;
 										}
 	
