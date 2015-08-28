@@ -543,7 +543,7 @@ $scope.startGame = function() {
 											console.log("hi");
 											console.log(loserWords[word].toUpperCase() + " " + attemptToSteal.toUpperCase());
 											ref.child('players').child($scope.playerToStealFrom).child('words').child(word).remove();
-											ref.child('players').child(playerName).update({points : otherpoints - (attemptToSteal.length - 3)});
+											ref.child('players').child($scope.playerToStealFrom).update({points : otherpoints - (attemptToSteal.length - 3)});
 											break;
 										}
 	
