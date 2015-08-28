@@ -74,8 +74,8 @@
 
 
         <div class = "statusMessage center-align">
-          Welcome to game {{gameName}}! Please enter your name 
-                <div ng-show = "gameObject.password.length > 0"> and password</div>.
+          <div ng-show = "gameObject.password.length == 0"> Welcome to game {{gameName}}! Please enter your name.</div>
+          <div ng-show = "gameObject.password.length > 0"> Welcome to game {{gameName}}! Please enter your name and password.</div>
         </div>
 
         
