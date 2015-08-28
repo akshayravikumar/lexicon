@@ -1,7 +1,8 @@
 angular.module('lexiconApp').controller('roomController', 
 function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $timeout, hotkeys){
 
-
+	// first, make sure that the game name is valid
+	
 	$scope.gameInvalid = true;
 
 	if (/^[a-z0-9]+$/i.test($routeParams.name) && $routeParams.name.length <= 15) {
@@ -568,30 +569,30 @@ $scope.startGame = function() {
 			}
 
 
-		$scope.focusOnWord = function(word, player) {
-			$scope.stealFromPile = false; 
-			$scope.attemptToSteal = word;
-			$scope.playerToStealFrom = player;
-		}
+	$scope.focusOnWord = function(word, player) {
+		$scope.stealFromPile = false; 
+		$scope.attemptToSteal = word;
+		$scope.playerToStealFrom = player;
+	}
 
-		  hotkeys.bindTo($scope)
-			    .add({
-			      combo: 'p',
-			      description: 'Steal from pile.',
-			      callback: function() {
-			      	$scope.stealFromPile = true; 
-			      }
-			    })
-			    // you can chain these methods for ease of use:
-			    .add({
-			      combo: 'n',
-			      description: 'Add letter.',
-			      callback: function() {
-			      	if (!$scope.addLetterButtonDisabled) {
-			      		$scope.addLetter();
-			      	}
-			      }
-			    });
+	hotkeys.bindTo($scope)
+	.add({
+	  combo: 'p',
+	  description: 'Steal from pile.',
+	  callback: function() {
+	  	$scope.stealFromPile = true; 
+	  }
+	})
+	// you can chain these methods for ease of use:
+	.add({
+	  combo: 'n',
+	  description: 'Add letter.',
+	  callback: function() {
+	  	if (!$scope.addLetterButtonDisabled && $scope.gameObject.started) {
+	  		$scope.addLetter();
+	  	}
+	  }
+	});
 
 
 });

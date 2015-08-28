@@ -153,25 +153,32 @@
 
     <div style = "height: 90%;">
 
-          <div id = "roomHeader" class = "row" style="background-color:#3498db; height: 50px">
+          <div id = "roomHeader" class = "row orange lighten-4" style="height: 50px">
 
               <!-- stuff  -->
               <div class = "col m3" > 
                 &nbsp;
               </div>
               <!-- center -->
-              <div class = "col m6 valign-wrapper" style = "height: 100%">
-               <h2 class = "center-align valign" style = "font-size: 24px"> Game {{gameName}} </h2>
-              </div>
+
+              <div class = "col m6 valign-wrapper" style = "height: 100%" >
+                <div class = "center-align valign statusMessage" style = "width: 100%">
+                  Game {{gameName}} 
+                </div>
+              </div>   
 
               <!-- info  -->
               <div class = "col m3 valign-wrapper" style = "height: 100%" >
-                <div class = "right-align valign">
-                  <div ng-show = "creator" > <b> Password: </b> {{gamePassword}} </div> 
-                  Players: <b> {{gameObject.num_players}}/{{gameObject.max_players}} </b> 
+                <div class = "right-align valign" style = "width: 100%">
+                  <div ng-show = "gamePassword.length > 0"> <b> Password: </b> {{gamePassword}}  </div>
+                  <div ng-show = "gamePassword.length == 0"> <b> Password: </b> none </div>
+                  <b> Players: </b> {{gameObject.num_players}}/{{gameObject.max_players}} 
                 </div>
-              </div>      
+              </div>   
+
           </div>
+
+          <br/>
 
           <div class = "row">
 
@@ -221,7 +228,9 @@
               </table>
 
               <div style = "width: 100%; height: 100%" ng-show = "!gameObject.started && creator" class = "valign-wrapper">
+                <center>
                   <button class = "center-align valign waves-effect waves-light btn-large" ng-click = "startGame()"> Start Game </button>
+                </center>
               </div>
 
             </div>
@@ -252,12 +261,12 @@
             </div>
           </div>
 
-          <div class = "col m3  blue-grey lighten-4" id = "chat" style = "height: 90vh;">
+          <div class = "col m3  blue-grey lighten-4" id = "chat" style = "height: 80vh;">
 
-          <div class = "row" style = "background-color: #bdc3c7l; overflow-y: scroll; height: 100%;" class = "wordwrap" scroll-glue>
+          <div class = "row" style = "overflow-y: scroll; height: 100%; width: 100%" scroll-glue>
 
-              <div id = "messages" ng-repeat = "m in messages">
-                  <div ng-if = "m.type == 'message'">
+              <div id = "messages" ng-repeat = "m in messages" style = "width: 100%" style = "word-wrap: break-word">
+                  <div ng-if = "m.type == 'message'" >
                       <strong> {{m.name}}: </strong> {{m.text}}
                   </div>
 
@@ -268,15 +277,13 @@
               </div>
           </div>
 
-          IN BETWEEN
-
-            <div id = "chatFooter" class = "row" style="position: absolute; bottom: 0; height: 20px; clear:both;">
+            <div id = "chatFooter" class = "row" style="position: absolute; bottom: 0; height: 20px;">
               <form ng-submit="sendMessage()" style = "width: 100%">
-                <div class="input-field">
-                  <input type="text" class="form-control" ng-model = "messageBody" placeholder="Enter to send">
+                <div class="input-field" style = "width: 100%">
+                  <input type="text" class="form-control" ng-model = "messageBody" placeholder="Enter to send" style = "width: 100%">
                 </div>
-                <button type="submit" hidden>Send</button>
-            </form>
+                <button type="submit" style = "width:0" hidden>Send</button>
+              </form>
             </div>
 
           </div>
