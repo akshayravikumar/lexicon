@@ -189,8 +189,8 @@
                     <a class = "wordlink" ng-click = "focusOnWord(word, player)"> {{word}} </button>
                 </div>
 
-                 <div ng-if "(!('words' in data)) || (data.words.length == 0)">
-                    No words yet.
+                 <div ng-if "Object.keys(data['words']).length === 0">
+                    No words.
                 </div>
 
               </td> 
