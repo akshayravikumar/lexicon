@@ -513,33 +513,24 @@ $scope.startGame = function() {
 								return;
 							} else {
 
-								var currpoints = $scope.gameObject.players[playerName].points;
-								var otherpoints = $scope.gameObject.players[$scope.playerToStealFrom].points;
-
-								if (currpoints == undefined) {
-									currpoints = 0;
-								}
-
-								if (otherpoints == undefined) {
-									otherpoints = 0;
-								}
-
+							
 								$firebaseArray(ref.child('players').child(playerName).child('words')).$add(stealWord).then(function() {
+
+										var currpoints = $scope.gameObject.players[playerName].points;									
+
+										if (currpoints == undefined) {
+											currpoints = 0;
+										}
+							
 										$scope.removeLetters(remainingLetters);
 
 										ref.child('players').child(playerName).update({points : currpoints + stealWord.length - 3});
 
-										console.log($scope.playerToStealFrom);
+										var otherpoints = $scope.gameObject.players[$scope.playerToStealFrom].points;
 
-										console.log(attemptToSteal);
-
-										console.log("asdasdfasdfasdfasdfasdfasdfas");
-
-										console.log($scope.gameObject);
-										console.log($scope.gameObject.players);
-										console.log($scope.gameObject.players[$scope.playerToStealFrom]);
-										console.log($scope.gameObject.players[$scope.playerToStealFrom].words);
-										console.log(Object.keys($scope.gameObject.players[$scope.playerToStealFrom].words).length);
+										if (otherpoints == undefined) {
+											otherpoints = 0;
+										}
 
 										var loserWords = $scope.gameObject.players[$scope.playerToStealFrom].words;
 
