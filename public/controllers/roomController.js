@@ -222,7 +222,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 							ref.update({letter_index : index + 1});
 						});
 
-						$timeout(function(){ $scope.addLetterButtonDisabled = false; }, 3000);
+						$timeout(function(){ $scope.addLetterButtonDisabled = false; }, 10);
 						
 					}
 
