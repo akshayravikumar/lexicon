@@ -392,8 +392,11 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 }
 
 $scope.startGame = function() {
-	ref.update({started: true}, function() {				
-
+	ref.update({started: true}, function() {
+		$timeout(function(){$scope.addLetter(); }, 250);				
+		$timeout(function(){$scope.addLetter(); }, 500);				
+		$timeout(function(){$scope.addLetter(); }, 750);				
+		$timeout(function(){$scope.addLetter(); }, 1000);				
 	});
 }
 
