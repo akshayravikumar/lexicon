@@ -223,9 +223,7 @@
               </table>
 
               <div style = "width: 100%; height: 100%" ng-show = "!gameObject.started && creator" class = "valign-wrapper">
-                <center>
                   <button class = "center-align valign waves-effect waves-light btn-large" ng-click = "startGame()"> Start Game </button>
-                </center>
               </div>
 
             </div>
@@ -235,10 +233,10 @@
             <center>
 
               <form style = "width:50%; margin: auto;">
-              <div ng-show = "stealFromPile"> 
+              <div ng-show = "stealFromPile && gameObject.started"> 
                 Attempting to make a word from the pile...
                </div>
-               <div ng-hide = "stealFromPile"> 
+               <div ng-hide = "stealFromPile && gameObject.started"> 
                 Attempting to steal the word <b> {{attemptToSteal}} </b> ...
                </div>
                 <div class="input-field">

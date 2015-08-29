@@ -227,7 +227,6 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 					}
 
 
-
 					$scope.removeLetters = function(letters) {
 
 						console.log(letters);
@@ -514,22 +513,25 @@ $scope.startGame = function() {
 							} else {
 
 							
-								$firebaseArray(ref.child('players').child(playerName).child('words')).$add(stealWord).then(function() {
 
-										var currpoints = $scope.gameObject.players[playerName].points;									
+								$firebaseArray(ref.child('players').child(playerName).child('words')).$add(stealWord).then(function() {
+									var currpoints = $scope.gameObject.players[playerName].points;									
 
 										if (currpoints == undefined) {
 											currpoints = 0;
 										}
 							
-										$scope.removeLetters(remainingLetters);
+									ref.child('players').child(playerName).update({points : currpoints + stealWord.length - 3});
 
-										ref.child('players').child(playerName).update({points : currpoints + stealWord.length - 3});
+										
+										$scope.removeLetters(remainingLetters);
 
 										var otherpoints = $scope.gameObject.players[$scope.playerToStealFrom].points;
 
 										if (otherpoints == undefined) {
 											otherpoints = 0;
+										} else if ($scope.playerToStealFrom == playerName) {
+											otherpoints =  currpoints + stealWord.length - 3;
 										}
 
 										var loserWords = $scope.gameObject.players[$scope.playerToStealFrom].words;
@@ -537,14 +539,17 @@ $scope.startGame = function() {
 										for (var word in loserWords) {
 											console.log("hi");
 											console.log(loserWords[word].toUpperCase() + " " + attemptToSteal.toUpperCase());
-											ref.child('players').child($scope.playerToStealFrom).child('words').child(word).remove();
-											ref.child('players').child($scope.playerToStealFrom).update({points : otherpoints - (attemptToSteal.length - 3)});
-											break;
+											if (loserWords[word].toUpperCase() == attemptToSteal.toUpperCase()) {
+												ref.child('players').child($scope.playerToStealFrom).child('words').child(word).remove();
+												ref.child('players').child($scope.playerToStealFrom).update({points : otherpoints - (attemptToSteal.length - 3)});
+												break;
+											}
 										}
-	
-										
+					
+										$scope.stealFromPile = true;
 	 									$scope.stealStatusMessage   = "Congrats! This steal is valid.";
 										return;
+							
 									 	
 								});
 
