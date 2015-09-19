@@ -403,11 +403,13 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 
 					if (!isSteal) {
 						$scope.stealStatusMessage = "Sorry, this doesn't use the letters in the pile.";
+						$scope.stealWord = "";
 						return;
 					} else {
  
 						if (!anagrams.isAWord(stealWord)) {
 								$scope.stealStatusMessage = "Sorry, you have the right letters, but this isn't a real word.";
+								$scope.stealWord = "";
 								return;
 						} else {
 
@@ -415,6 +417,17 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 								$scope.removeLetters($scope.stealWord.split(""));
 								ref.child('players').child(playerName).update({points : $scope.gameObject.players[playerName].points + stealWord.length - 3});
 								$scope.stealStatusMessage  = "Congrats! This steal is valid.";
+
+								var successString = playerName + " got the word " + stealWord + " from the pile!";
+
+								$scope.messages.$add({
+									type: 'info',
+								 	name: "",
+							      	text: successString
+								});
+								
+								$scope.stealWord = "";
+
 								return;
 							});
 
@@ -457,16 +470,19 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 
 					if (!fromPile) {
 						$scope.stealStatusMessage = "Sorry, this is a steal, but it doesn't use the letters in the pile.";
+						$scope.stealWord = "";
 						return;
 					} else {
 
 						if (!anagrams.isAWord(stealWord)) {
 							$scope.stealStatusMessage = "Sorry, this is a steal, but it isn't a real word.";
+							$scope.stealWord = "";
 							return;
 						} else {
 
 							if (!anagrams.isNonTrivial(stealWord, attemptToSteal)) {
 								$scope.stealStatusMessage = "Sorry, this is a valid steal, but it is trivial.";
+								$scope.stealWord = "";
 								return;
 							} else {							
 
@@ -500,9 +516,23 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 												break;
 											}
 										}
+
+										var successString = playerName + " stole the word " + stealWord + " from " + $scope.playerToStealFrom + "!";
+
+										if ($scope.playerToStealFrom == playerName) {
+											successString = playerName + " stole the word " + stealWord + " from himself!";
+										}
+
+
+										$scope.messages.$add({
+											type: 'info',
+										 	name: "",
+									      	text: successString
+										});
 					
 										$scope.stealFromPile = true;
 	 									$scope.stealStatusMessage   = "Congrats! This steal is valid.";
+										$scope.stealWord = "";
 										return;
 									 	
 								});
@@ -515,6 +545,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 					
 					}
 
+					$scope.stealWord = "";
 					return;
 
 				}
