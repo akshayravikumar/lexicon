@@ -1,6 +1,6 @@
 angular.module('lexiconApp').controller('roomController', 
 function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $timeout, hotkeys){
-
+	$scope.Object = Object;
 	function shuffle(array) {
 		  var currentIndex = array.length, temporaryValue, randomIndex ;
 
@@ -280,11 +280,11 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 
 	enterRoom = function() {
 
-		ref.child("players").child(playerName).onDisconnect().remove();
+		// ref.child("players").child(playerName).onDisconnect().remove();
 
-		ref.on('child_changed', function(childSnapshot, prevChildKey) {
-		  $scope.gameObject.num_players =  $scope.gameObject.players.length;
-		});
+		// ref.on('child_changed', function(childSnapshot, prevChildKey) {
+		//   $scope.gameObject.num_players =  $scope.gameObject.players.length;
+		// });
 
  		$scope.insideRoom = true;
 		console.log($scope.insideRoom);
@@ -361,12 +361,15 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 					}
 
 					var l = letters[index];
+					var done = false;
 					console.log("letter " + l);
 					for (var i = 0; i < $scope.activeLetters.length; i++) {
+							if (done) {break;}
 							if (l.toUpperCase() == $scope.activeLetters[i].$value.toUpperCase()) {
 							$scope.activeLetters.$remove(i).then(function(ref) {
 							  removeLetter(index + 1);
 							});	
+							done = true;
 						}
 					}
 				};
@@ -377,8 +380,8 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 
 			// -----------------------------------------------------------------------
 
-			$scope.attemptSteal = function() {
-
+			$scope.attemptSteal = function($event) {
+			$event.preventDefault()
 			var anagrams = Anagrams();
 
 			var stealWord = $scope.stealWord.toLowerCase();
@@ -590,8 +593,15 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 			  		$scope.addLetter();
 			  	}
 			  }
+			})
+			.add({
+			  combo: 's',
+			  description: 'Focus on steal.',
+			  callback: function() {
+			  	document.getElementById("stealInput").innerHTML = "";
+			  	document.getElementById("stealInput").focus();
+			  }
 			});
-
 
 
 	// end of enterroom

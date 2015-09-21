@@ -158,7 +158,7 @@
 
     <div style = "height: 90%;">
 
-          <div id = "roomHeader" class = "row orange lighten-4" style="height: 50px">
+          <div id = "roomHeader" class = "row  blue-grey lighten-5" style="height: 50px">
 
               <!-- stuff  -->
               <div class = "col m3" > 
@@ -177,7 +177,7 @@
                 <div class = "right-align valign" style = "width: 100%">
                   <div ng-show = "gamePassword.length > 0"> <b> Password: </b> {{gamePassword}}  </div>
                   <div ng-show = "gamePassword.length == 0"> <b> Password: </b> none </div>
-                  <b> Players: </b> {{gameObject.players.length}}/{{gameObject.max_players}} 
+                  <b> Players: </b> {{gameObject.num_players}}/{{gameObject.max_players}} 
                 </div>
               </div>   
 
@@ -236,21 +236,23 @@
 
             <center>
 
-              <form style = "width:50%; margin: auto;">
               <div ng-show = "stealFromPile && gameObject.started"> 
-                Attempting to make a word from the pile...
-               </div>
-               <div ng-hide = "stealFromPile && gameObject.started"> 
+                  Attempting to make a word from the pile...
+              </div>
+              <div ng-hide = "stealFromPile && gameObject.started"> 
                 Attempting to steal the word <b> {{attemptToSteal}} </b> ...
-               </div>
+              </div>
+
+              <form style = "width:50%; margin: auto;">
                 <div class="input-field">
-                  <input type="text" class="form-control" ng-model="stealWord" placeholder="Type steal here" required>
+                  <input type="text" class="form-control"  id = "stealInput" ng-model="stealWord" placeholder="Type steal here">
                 </div>
+                 <button type="submit"  ng-click = "attemptSteal($event)" class="waves-effect waves-light btn">GET WORD!</button> 
             </form>
 
-            <button type="submit"  ng-click = "attemptSteal()" class="waves-effect waves-light btn">GET WORD!</button> 
-            <button ng-click="stealFromPile = true;" class="waves-effect waves-light btn">Steal from pile.</button>
-              <button ng-click = "addLetter()" ng-show = "gameObject.started" class="waves-effect waves-light btn" ng-disabled = "addLetterButtonDisabled"> Add Letter </button>
+            <button ng-click="stealFromPile = true;" class="btn-floating btn-large waves-effect waves-light light-blue lighten-2"><i class="material-icons">visibility</i></button>
+              <button ng-click = "addLetter()" ng-show = "gameObject.started" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3" ng-disabled = "addLetterButtonDisabled"><i class="material-icons">add</i></button>
+            <br/>
             <div class = "statusMessage"> {{stealStatusMessage}} </div>
 
             </center>
