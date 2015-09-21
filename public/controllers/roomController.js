@@ -138,6 +138,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 		$scope.gameStarted = false;
 		$scope.stealFromPile = true;
 
+		$scope.endedMessage = "";
 		var playerName;
 
 		$scope.maxPlayers = 4;
@@ -211,6 +212,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 				num_players: 1, 
 				public: $scope.publicGame, 
 				started: false,
+				ended: false,
 				last_move: Firebase.ServerValue.TIMESTAMP,
 				creation_time: Firebase.ServerValue.TIMESTAMP,
 				password : pass, 
@@ -285,6 +287,19 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 		// ref.on('child_changed', function(childSnapshot, prevChildKey) {
 		//   $scope.gameObject.num_players =  $scope.gameObject.players.length;
 		// });
+
+		$scope.askToEndGame = function() {
+			if (confirm("Are you sure you want to end the game?")) {
+				$scope.endGame(playerName + " has ended the game.");
+			} 
+		}
+
+		$scope.endGame = function(message) { 
+			console.log(message);
+			ref.update({ended: true}, function() {
+				$scope.endedMessage = message;			
+			});
+		}
 
  		$scope.insideRoom = true;
 		console.log($scope.insideRoom);
@@ -598,10 +613,12 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 			  combo: 's',
 			  description: 'Focus on steal.',
 			  callback: function() {
-			  	document.getElementById("stealInput").innerHTML = "";
 			  	document.getElementById("stealInput").focus();
+			  	document.getElementById("stealInput").innerHTML = "";
 			  }
 			});
+
+
 
 
 	// end of enterroom

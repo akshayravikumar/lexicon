@@ -212,11 +212,11 @@
           </div>
 
             <div id = "wordPile" style="width: 100%; height: 200px; overflow: scroll; margin-top: 10px" class = "row indigo lighten-5">
-            <table style = "table-layout:fixed; width: 100%" ng-show = "gameObject.started">
+            <table style = "table-layout:fixed; width: 100%" ng-show = "gameObject.started && !gameObject.ended">
 
                <tr ng-repeat = "i in [0,1,2,3,4,5,6,7,8,9]" style = "width: 100%"> 
                 <td ng-repeat = "j in [0,1,2,3,4,5,6,7,8,9,10,11,12, 13, 14, 15, 16, 17, 18, 19]" ng-if = "20*i + j <  activeLetters.length" style = "width: 50px">
-                 <div class = "wordtile valign-wrapper draggable" > 
+                 <div class = "wordtile valign-wrapper draggable yellow lighten-3" > 
                       <div class = "valign center-align" style = "width: 100%"> 
                         {{activeLetters[20*i + j].$value}} 
                       </div>
@@ -227,7 +227,15 @@
               </table>
 
               <div style = "width: 100%; height: 100%" ng-show = "!gameObject.started && creator" class = "valign-wrapper">
-                  <button class = "valign waves-effect waves-light btn-large center-align deep-purple lighten-1" ng-click = "startGame()"> Start Game </button>
+              <center>
+                  <button class = "valign waves-effect waves-light btn-large center-align deep-purple lighten-1 statusMessage" ng-click = "startGame()"> Start Game! </button>
+              </center>
+              </div>
+
+               <div style = "width: 100%; height: 100%" ng-show = "gameObject.ended" class = "valign-wrapper">
+              <center>
+                  {{endedMessage}}. Feel free to go back and start a new game!
+              </center>
               </div>
 
             </div>
@@ -239,7 +247,7 @@
               <div ng-show = "stealFromPile && gameObject.started"> 
                   Attempting to make a word from the pile...
               </div>
-              <div ng-hide = "stealFromPile && gameObject.started"> 
+              <div ng-show = "!stealFromPile && gameObject.started"> 
                 Attempting to steal the word <b> {{attemptToSteal}} </b> ...
               </div>
 
@@ -252,6 +260,7 @@
 
             <button ng-click="stealFromPile = true;" class="btn-floating btn-large waves-effect waves-light light-blue lighten-2"><i class="material-icons">visibility</i></button>
               <button ng-click = "addLetter()" ng-show = "gameObject.started" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3" ng-disabled = "addLetterButtonDisabled"><i class="material-icons">add</i></button>
+              <button ng-click = "askToEndGame()" ng-show = "gameObject.started" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">highlight off</i></button>
             <br/>
             <div class = "statusMessage"> {{stealStatusMessage}} </div>
 
@@ -262,7 +271,7 @@
 
           <div class = "col m3  blue-grey lighten-5" id = "chat" style = "height: 80vh;">
 
-          <div class = "row" style = "overflow-y: scroll; height: 100%; width: 100%" scroll-glue>
+          <div class = "row " style = "overflow-y: scroll; height:90%; width: 100%" scroll-glue>
 
               <div id = "messages" ng-repeat = "m in messages" style = "width: 100%" style = "word-wrap: break-word">
                   <div ng-if = "m.type == 'message'" >
@@ -276,7 +285,7 @@
               </div>
           </div>
 
-            <div id = "chatFooter" class = "row" style="position: absolute; bottom: 0; height: 20px;">
+            <div id = "chatFooter" class = "row " style="position: absolute; bottom: 0;">
               <form ng-submit="sendMessage()" style = "width: 100%">
                 <div class="input-field" style = "width: 100%">
                   <input type="text" class="form-control" ng-model = "messageBody" placeholder="Enter to send" style = "width: 100%">

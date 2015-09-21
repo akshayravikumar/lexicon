@@ -39,8 +39,7 @@ main {
 .wordtile {
   width: 35px;
   height: 35px;
-  background-color: #29e;
-  color: white;
+  color: black;
   font-size: 18px;
 }
 
