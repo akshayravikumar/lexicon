@@ -295,10 +295,8 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 		}
 
 		$scope.endGame = function(message) { 
-			console.log(message);
-			ref.update({ended: true}, function() {
-				$scope.endedMessage = message;			
-			});
+			ref.update({ended: true});
+			$scope.endedMessage = message;			
 		}
 
  		$scope.insideRoom = true;
