@@ -5,6 +5,19 @@
   	var fb = new Firebase('https://lexicongame.firebaseio.com/');
 
   	$scope.games = $firebaseObject(fb);
+  	
+  	for (game in $scope.games.$$conf)  {
+  		console.log(game);
+  		if ($scope.games.$$conf[game].creation_time !== undefined) {
+	  		if ($scope.games.$$conf[game]["players"] !== undefined) {
+	  			if (game.players.length == 0) {
+	  				fb.child(game).remove();
+	  			}	
+	  		} else {
+	  			fb.child(game).remove();
+	  		}
+	  	}
+  	}
 
 	$scope.errorMessage = "Welcome! Join a room to get started.";
 

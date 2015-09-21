@@ -34,17 +34,22 @@
              </div>
 
              <br/>
-
-              <div class="preloader-wrapper big active">
-              <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
+             <div ng-show = "showSpinner">
+                <div class="preloader-wrapper big active" >
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
                 </div>
               </div>
+            </div>
+            <br/>
+            <div ng-show = "showHomebutton">
+             <a class="waves-effect waves-light btn btn-large" href = "/">Go Home</a>
             </div>
         </div>
 
@@ -172,7 +177,7 @@
                 <div class = "right-align valign" style = "width: 100%">
                   <div ng-show = "gamePassword.length > 0"> <b> Password: </b> {{gamePassword}}  </div>
                   <div ng-show = "gamePassword.length == 0"> <b> Password: </b> none </div>
-                  <b> Players: </b> {{gameObject.num_players}}/{{gameObject.max_players}} 
+                  <b> Players: </b> {{gameObject.players.length}}/{{gameObject.max_players}} 
                 </div>
               </div>   
 
