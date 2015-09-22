@@ -3,7 +3,7 @@
  }*/
 
  #gameTitle {
-   	 font-family: 'Poiret One', cursive;
+   	 font-family: 'Life Savers', cursive;
  }
 
  .statusMessage {
@@ -41,6 +41,9 @@ main {
   height: 35px;
   color: black;
   font-size: 18px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d3d3d3;
 }
 
 .fade {
