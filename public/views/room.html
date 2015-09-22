@@ -228,7 +228,7 @@
               
               <div style = "width: 100%; height: 100%; text-align: center" ng-show = "!gameObject.started && creator" class = "valign-wrapper center-align">
               <center>
-                  <button class = "valign waves-effect waves-light btn-large purple accent-2" ng-click = "startGame()" > Start Game! </button>
+                  <button class = "valign waves-effect waves-light btn-large blue center-align" ng-click = "startGame()" > Start Game! </button>
               </center>
               </div>
               
@@ -259,7 +259,7 @@
                 <div class="input-field">
                   <input type="text" class="form-control"  id = "stealInput" ng-model="stealWord" placeholder="Type steal here">
                 </div>
-                 <button type="submit"  ng-click = "attemptSteal($event)" class="waves-effect waves-light btn">GET WORD!</button> 
+                 <button type="submit"  ng-click = "attemptSteal($event)" class="waves-effect waves-light btn blue">GET WORD!</button> 
             </form>
 
             <br/>
@@ -274,6 +274,7 @@
             <div class = "statusMessage"> {{stealStatusMessage}} </div>
 
             </center>
+            <br/>
             <br/>
             </div>
           </div>
