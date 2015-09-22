@@ -547,7 +547,7 @@ function($scope, $routeParams, $location, $firebaseObject, $firebaseArray, $time
 										var successString = playerName + " stole the word " + stealWord + " from " + $scope.playerToStealFrom + "!";
 
 										if ($scope.playerToStealFrom == playerName) {
-											successString = playerName + " stole the word " + stealWord + " from himself!";
+											successString = playerName + " stole the word " + stealWord + " from his/herself!";
 										}
 
 
